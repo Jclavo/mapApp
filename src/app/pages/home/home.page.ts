@@ -15,11 +15,16 @@ import leaflet from 'leaflet';
 })
 export class HomePage {
 
-  //private map: Map;
+  private map: any;
+  private latitudeHome: number;
+  private longitudeHome: number;
 
   constructor(private geolocation: Geolocation,
     // private map: Map,
-  ) { }
+  ) {
+    this.latitudeHome = -15.8329084;
+    this.longitudeHome = -48.084577;
+  }
 
   getCurrentPosition() {
     console.log('Holi');
@@ -28,61 +33,65 @@ export class HomePage {
       console.log('Coordinates', resp);
       // resp.coords.latitude
       // resp.coords.longitude
+      //leaflet.marker([, -48.08]).addTo(this.map);
+
+      this.latitudeHome = resp.coords.latitude;
+      this.longitudeHome = resp.coords.longitude,
+
+        //this.leafletMap(this.latitudeHome,this.longitudeHome);
+        this.createMarker(this.latitudeHome, this.longitudeHome);
+
+
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
 
-  ionViewDidEnter() { this.leafletMap(); }
+  ionViewDidEnter() {
+    this.leafletMap(this.latitudeHome, this.longitudeHome);
+  }
 
-  leafletMap() {
-    // In setView add latLng and zoom
+  leafletMap(latitude: number, longitude: number) {
 
-
-
-    // tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-    //   attribution: 'edupala.com © ionic LeafLet',
-    // }).addTo(mapConst);
-
-    // tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(mapConst);
-
-    // tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    //   attribution: 'edupala.com'
-    // }).addTo(map);
-
-    // let markPoint = marker([-15.83, -48.08]).addTo(this.map)
-
-
-    // marker( [-15.83, -48.08], {icon: customMarkerIcon})
-    //  marker( [-15.83, -48.08])
-    //    .addTo(mapConst)
-    //    .bindPopup('Hi! <br> I am here, beach!!.')
-    //    .openPopup();
-
-    //marker([51.5, -0.09]).addTo(this.map);
-
-
-    // tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    //   attribution: 'edupala.com'
-    // }).addTo(this.map);
-
-    // const markPoint = marker([-15.83, -48.08]);
-    // markPoint.bindPopup('<p>Tashi Delek - Bangalore.</p>');
-    // this.map.addLayer(markPoint);
-
-    var map = leaflet.map('mapId').setView([-15.8329084, -48.084577], 13);
+    this.map = leaflet.map('mapId').setView([latitude, longitude], 13);
+    //this.map = leaflet.map('mapId').setView([-15.83, -48.08]);
 
     leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    }).addTo(this.map);
 
-    leaflet.marker([-15.83, -48.08]).addTo(map);
-    // .bindPopup('xd')
-    // .openPopup();
-
-
+    //leaflet.marker([-15.83, -48.08]).addTo(map);
   }
 
+  createMarker(latitude: any, longitude: any) {
+    leaflet.marker([latitude, longitude]).addTo(this.map);
+  }
+
+  setRandomMarkers() {
+
+    
+
+
+
+   }
+
+
 }
+
+//KINDS OF MAPS
+
+// leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(map);
+
+// tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+//   attribution: 'edupala.com'
+// }).addTo(this.map);
+
+// tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+//   attribution: 'edupala.com © ionic LeafLet',
+// }).addTo(mapConst);
+
+// tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(mapConst);

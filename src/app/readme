@@ -1,2 +1,16 @@
 ionic cordova plugin add cordova-plugin-geolocation
 npm install @ionic-native/geolocation
+
+npm install leaflet --save
+
+ADD angular.json
+              {
+                "input": "node_modules/leaflet/dist/leaflet.css"
+              }
+                            {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "leaflet/"
+              }
+
+              
